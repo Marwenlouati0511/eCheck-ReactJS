@@ -1,0 +1,1 @@
+export const urlGlobal = "http://www.e-Check.somee.com";

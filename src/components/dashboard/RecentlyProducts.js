@@ -1,65 +1,74 @@
-import React, {PropTypes} from 'react';
+import React from 'react';
 import Avatar from 'material-ui/Avatar';
 import {List, ListItem} from 'material-ui/List';
 import Subheader from 'material-ui/Subheader';
-import Divider from 'material-ui/Divider';
 import Paper from 'material-ui/Paper';
-import IconButton from 'material-ui/IconButton';
-import MoreVertIcon from 'material-ui/svg-icons/navigation/more-vert';
-import IconMenu from 'material-ui/IconMenu';
-import MenuItem from 'material-ui/MenuItem';
-import {grey400, cyan600, white} from 'material-ui/styles/colors';
+import Address from 'material-ui/svg-icons/action/store';
+import Email from 'material-ui/svg-icons/communication/email';
+import Departement from 'material-ui/svg-icons/social/location-city';
+import Code from 'material-ui/svg-icons/editor/format-list-numbered';
+import Person from 'material-ui/svg-icons/action/perm-identity';
+import { white} from 'material-ui/styles/colors';
 import {typography} from 'material-ui/styles';
-import Wallpaper from 'material-ui/svg-icons/device/wallpaper';
+import {connect} from 'react-redux';
 
-const RecentlyProducts = (props) => {
+const styles = {
+  subheader: {
+    fontSize: 24,
+    fontWeight: typography.fontWeightLight,
+    backgroundColor: '#42D9E9',
+    color: white
+  }
+};
 
-  const styles = {
-    subheader: {
-      fontSize: 24,
-      fontWeight: typography.fontWeightLight,
-      backgroundColor: cyan600,
-      color: white
-    }
-  };
 
-  const iconButtonElement = (
-    <IconButton
-      touch={true}
-      tooltipPosition="bottom-left"
-    >
-      <MoreVertIcon color={grey400} />
-    </IconButton>
-  );
 
-  const rightIconMenu = (
-    <IconMenu iconButtonElement={iconButtonElement}>
-      <MenuItem>View</MenuItem>
-    </IconMenu>
-  );
+
+class RecentlyProducts extends React.Component  {
+  render(){
 
   return (
     <Paper>
       <List>
-        <Subheader style={styles.subheader}>Recent Products</Subheader>
-        {props.data.map(item =>
-          <div key={item.title}>
-            <ListItem
-              leftAvatar={<Avatar icon={<Wallpaper />} />}
-              primaryText={item.title}
-              secondaryText={item.text}
-              rightIconButton={rightIconMenu}
+        <Subheader style={styles.subheader}>Employee Info</Subheader>
+        {this.props.employeeList.map(Id=>
+          <div key={Id.Name}>
+          <ListItem
+              leftAvatar={<Avatar icon={<Person />} />}
+              primaryText={Id.Name}
+              disabled={true}
             />
-            <Divider inset={true} />
+          <ListItem
+              leftAvatar={<Avatar icon={<Address />} />}
+              primaryText={Id.Address}
+              disabled={true}
+            />
+          <ListItem
+              leftAvatar={<Avatar icon={<Email />} />}
+              primaryText={Id.Email}
+              disabled={true}
+            />
+          <ListItem
+              leftAvatar={<Avatar icon={<Departement />} />}
+              primaryText={Id.DepartementId}
+              disabled={true}
+            />
+          <ListItem
+              leftAvatar={<Avatar icon={<Code />} />}
+              primaryText={Id.RegistrationCode}
+              disabled={true}
+            />
           </div>
         )}
       </List>
     </Paper>
   );
+}}
+const mapStateToProps = state => {
+	return {
+    
+    employeeList: state.GetEmploye.employeeList
+	};
 };
 
-RecentlyProducts.propTypes = {
-  data: PropTypes.array
-};
-
-export default RecentlyProducts;
+export default connect(mapStateToProps) (RecentlyProducts);

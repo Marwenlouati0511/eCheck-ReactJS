@@ -2,16 +2,17 @@ import React, { PropTypes } from 'react';
 import MuiThemeProvider from 'material-ui/styles/MuiThemeProvider';
 import Header from '../components/Header';
 import LeftDrawer from '../components/LeftDrawer';
-import withWidth, {LARGE, SMALL} from 'material-ui/utils/withWidth';
+import  {LARGE, SMALL} from 'material-ui/utils/withWidth';
 import ThemeDefault from '../theme-default';
 import Data from '../data';
+import {connect} from 'react-redux';
 
 class App extends React.Component {
 
   constructor(props) {
     super(props);
     this.state = {
-      navDrawerOpen: false
+      navDrawerOpen: true,
     };
   }
 
@@ -26,7 +27,6 @@ class App extends React.Component {
       navDrawerOpen: !this.state.navDrawerOpen
     });
   }
-
   render() {
     let { navDrawerOpen } = this.state;
     const paddingLeftDrawerOpen = 236;
@@ -42,14 +42,16 @@ class App extends React.Component {
     };
 
     return (
+   
       <MuiThemeProvider muiTheme={ThemeDefault}>
         <div>
           <Header styles={styles.header}
                   handleChangeRequestNavDrawer={this.handleChangeRequestNavDrawer.bind(this)}/>
-
+            
             <LeftDrawer navDrawerOpen={navDrawerOpen}
-                        menus={Data.menus}
-                        username="User Admin"/>
+                        menus={Data.menu}
+                        username={this.props.data.CompanyName}
+                       />
 
             <div style={styles.container}>
               {this.props.children}
@@ -64,5 +66,10 @@ App.propTypes = {
   children: PropTypes.element,
   width: PropTypes.number
 };
-
-export default withWidth()(App);
+const mapStateToProps = (state) => {
+	return {
+    data: state.auth.data,
+    
+	};
+};
+export default  connect(mapStateToProps)(App);

@@ -1,6 +1,6 @@
 import React, {PropTypes} from 'react';
 import Paper from 'material-ui/Paper';
-import Divider from 'material-ui/Divider';
+//import Divider from 'material-ui/Divider';
 import globalStyles from '../styles';
 
 const PageBase = (props) => {
@@ -14,7 +14,7 @@ const PageBase = (props) => {
         <Paper style={globalStyles.paper}>
           <h3 style={globalStyles.title}>{title}</h3>
 
-          <Divider/>
+          
           {props.children}
 
           <div style={globalStyles.clear}/>
